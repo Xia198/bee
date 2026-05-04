@@ -169,18 +169,18 @@ const beesData = [
     }
 ];
 
-// 九种蜜蜂对应的图片（用户需要下载替换）
-// 建议从 Pexels/Pixabay/Unsplash 下载对应品种的真实图片
+// 九种蜜蜂对应的图片
+// 支持多种图片格式: jpg, avif, webp, png
 const beeImages = [
-    'images/bee1.jpg',  // 黑大蜜蜂
-    'images/bee2.jpg',  // 大蜜蜂
-    'images/bee3.jpg',  // 沙巴蜜蜂
-    'images/bee4.jpg',  // 西方蜜蜂
-    'images/bee5.jpg',  // 绿奴蜂
-    'images/bee6.jpg',  // 苏拉威西蜂
-    'images/bee7.jpg',  // 东方蜜蜂
-    'images/bee8.jpg',  // 小蜜蜂
-    'images/bee9.jpg'   // 黑小蜜蜂
+    'images/bee1.jpg',      // 黑大蜜蜂
+    'images/bee2.jpg',      // 大蜜蜂
+    'images/bee3.jpg',      // 沙巴蜜蜂
+    'images/bee4.webp',     // 西方蜜蜂
+    'images/bee5.avif',     // 绿奴蜂
+    'images/bee6.webp',     // 苏拉威西蜂
+    'images/bee7.jpg',      // 东方蜜蜂
+    'images/bee8.webp',     // 小蜜蜂
+    'images/bee9.webp'      // 黑小蜜蜂
 ];
 
 // DOM 元素
@@ -367,81 +367,86 @@ function openModal(beeId) {
             <p class="detail-latin-name">${bee.latinName}</p>
         </div>
         
-        <div class="detail-image">
-            <div class="image-placeholder">
-                <svg viewBox="0 0 200 150" width="100%" height="100%">
-                    <ellipse cx="100" cy="80" rx="50" ry="55" fill="#F4A020" opacity="0.5"/>
-                    <rect x="50" y="55" width="100" height="12" fill="#8B5A2B" opacity="0.4"/>
-                    <rect x="50" y="80" width="100" height="12" fill="#8B5A2B" opacity="0.4"/>
-                    <circle cx="100" cy="35" r="28" fill="#8B5A2B" opacity="0.4"/>
-                    <ellipse cx="40" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.5" transform="rotate(-40 40 60)"/>
-                    <ellipse cx="160" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.5" transform="rotate(40 160 60)"/>
-                    <ellipse cx="40" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.4" transform="rotate(-50 40 85)"/>
-                    <ellipse cx="160" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.4" transform="rotate(50 160 85)"/>
-                </svg>
+        <div class="detail-content-wrapper">
+            <div class="detail-image-section">
+                <div class="detail-image">
+                    <div class="image-placeholder">
+                        <svg viewBox="0 0 200 150" width="100%" height="100%">
+                            <ellipse cx="100" cy="80" rx="50" ry="55" fill="#F4A020" opacity="0.5"/>
+                            <rect x="50" y="55" width="100" height="12" fill="#8B5A2B" opacity="0.4"/>
+                            <rect x="50" y="80" width="100" height="12" fill="#8B5A2B" opacity="0.4"/>
+                            <circle cx="100" cy="35" r="28" fill="#8B5A2B" opacity="0.4"/>
+                            <ellipse cx="40" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.5" transform="rotate(-40 40 60)"/>
+                            <ellipse cx="160" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.5" transform="rotate(40 160 60)"/>
+                            <ellipse cx="40" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.4" transform="rotate(-50 40 85)"/>
+                            <ellipse cx="160" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.4" transform="rotate(50 160 85)"/>
+                        </svg>
+                    </div>
+                    <img src="${beeImages[bee.id - 1]}" alt="${bee.chineseName}" onerror="this.parentElement.classList.add('image-error')">
+                </div>
+                <div class="detail-tags">
+                    <span class="detail-tag">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        ${bee.habitat}
+                    </span>
+                    <span class="detail-tag status-tag">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </svg>
+                        ${bee.status}
+                    </span>
+                </div>
             </div>
-            <img src="${beeImages[bee.id - 1]}" alt="${bee.chineseName}" onerror="this.parentElement.classList.add('image-error')">
-        </div>
-        
-        <div class="detail-section">
-            <h3 class="detail-section-title">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-                </svg>
-                分布区域
-            </h3>
-            <p class="detail-section-content">${bee.distribution}</p>
-        </div>
-        
-        <div class="detail-section">
-            <h3 class="detail-section-title">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                形态特征
-            </h3>
-            <ul class="detail-section-content">
-                ${bee.features.map(f => `<li style="margin-left: 1.5rem; margin-bottom: 0.5rem;">${f}</li>`).join('')}
-            </ul>
-        </div>
-        
-        <div class="detail-section">
-            <h3 class="detail-section-title">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" fill="none" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-                </svg>
-                生态习性
-            </h3>
-            <p class="detail-section-content">${bee.behavior}</p>
-        </div>
-        
-        <div class="detail-section">
-            <h3 class="detail-section-title">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                趣味小知识
-            </h3>
-            <p class="detail-section-content" style="color: var(--color-honey-dark); font-style: italic;">${bee.funFact}</p>
-        </div>
-        
-        <div class="detail-tags">
-            <span class="detail-tag">
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" fill="none" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                ${bee.habitat}
-            </span>
-            <span class="detail-tag">
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-                </svg>
-                保护等级: ${bee.status}
-            </span>
+            
+            <div class="detail-info-section">
+                <div class="detail-section">
+                    <h3 class="detail-section-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </svg>
+                        分布区域
+                    </h3>
+                    <p class="detail-section-content">${bee.distribution}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h3 class="detail-section-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        形态特征
+                    </h3>
+                    <ul class="detail-section-content">
+                        ${bee.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="detail-section">
+                    <h3 class="detail-section-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </svg>
+                        生态习性
+                    </h3>
+                    <p class="detail-section-content">${bee.behavior}</p>
+                </div>
+                
+                <div class="detail-section fun-fact-section">
+                    <h3 class="detail-section-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        趣味小知识
+                    </h3>
+                    <p class="detail-section-content">${bee.funFact}</p>
+                </div>
+            </div>
         </div>
     `;
 

@@ -501,8 +501,8 @@ body {
 
 .detail-header {
     text-align: center;
-    margin-bottom: var(--space-xl);
-    padding-bottom: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
     border-bottom: 2px dashed var(--color-honey-light);
 }
 
@@ -510,35 +510,49 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: linear-gradient(135deg, var(--color-honey) 0%, var(--color-honey-dark) 100%);
     color: var(--color-white);
     border-radius: 50%;
     font-family: var(--font-handwritten);
-    font-size: 1.5rem;
-    margin-bottom: var(--space-md);
+    font-size: 1.2rem;
+    margin-bottom: var(--space-sm);
 }
 
 .detail-chinese-name {
     font-family: var(--font-handwritten);
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--color-brown-dark);
     margin-bottom: var(--space-xs);
 }
 
 .detail-latin-name {
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--color-text-light);
+}
+
+/* 左右布局 */
+.detail-content-wrapper {
+    display: flex;
+    gap: var(--space-xl);
+}
+
+.detail-image-section {
+    flex: 0 0 280px;
+}
+
+.detail-info-section {
+    flex: 1;
+    overflow-y: auto;
 }
 
 .detail-image {
     width: 100%;
-    height: 280px;
+    height: 200px;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    margin-bottom: var(--space-xl);
     background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-cream-dark) 100%);
     display: flex;
     align-items: center;
@@ -552,41 +566,79 @@ body {
 }
 
 .detail-section {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
 }
 
 .detail-section-title {
     font-family: var(--font-handwritten);
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--color-brown-dark);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
     display: flex;
     align-items: center;
     gap: var(--space-xs);
 }
 
 .detail-section-content {
-    font-size: 1rem;
-    line-height: 1.8;
+    font-size: 0.95rem;
+    line-height: 1.7;
     color: var(--color-text);
+}
+
+.detail-section-content li {
+    margin-bottom: 0.3rem;
+    margin-left: 1.2rem;
 }
 
 .detail-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
 }
 
 .detail-tag {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
-    padding: var(--space-xs) var(--space-md);
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
     background: var(--color-cream);
     border-radius: var(--radius-lg);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--color-brown);
+}
+
+.status-tag {
+    background: var(--color-honey-light);
+    color: var(--color-brown-dark);
+}
+
+.fun-fact-section {
+    background: linear-gradient(135deg, var(--color-cream) 0%, #FFF5E6 100%);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-honey);
+}
+
+.fun-fact-section .detail-section-content {
+    color: var(--color-honey-dark);
+    font-style: italic;
+}
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+    .detail-content-wrapper {
+        flex-direction: column;
+    }
+    
+    .detail-image-section {
+        flex: none;
+        width: 100%;
+    }
+    
+    .detail-image {
+        height: 180px;
+    }
 }
 
 /* ========================================
@@ -661,19 +713,28 @@ body {
         border-radius: var(--radius-lg);
         max-height: 90vh;
     }
-    
+
     .modal-body {
         padding: var(--space-lg);
     }
-    
+
     .detail-chinese-name {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
-    
+
+    .detail-image-section {
+        flex: none;
+        width: 100%;
+    }
+
     .detail-image {
-        height: 200px;
+        height: 180px;
     }
-    
+
+    .detail-info-section {
+        max-height: 50vh;
+    }
+
     .floating-bee {
         display: none;
     }

@@ -358,7 +358,12 @@ function renderBeeCards() {
 // 打开弹窗
 function openModal(beeId) {
     const bee = beesData.find(b => b.id === beeId);
-    if (!bee) return;
+    if (!bee) {
+        console.log('Bee not found:', beeId);
+        return;
+    }
+    
+    console.log('Opening modal for:', bee.chineseName);
 
     modalBody.innerHTML = `
         <div class="detail-header">

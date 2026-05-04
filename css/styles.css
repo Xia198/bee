@@ -234,19 +234,19 @@ body {
 }
 
 /* ========================================
-   图库网格
+   图库网格 - 3x3 固定布局
    ======================================== */
 .gallery {
     position: relative;
     z-index: 1;
     padding: var(--space-xl) var(--space-lg) var(--space-xxl);
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
 }
 
@@ -618,6 +618,13 @@ body {
 /* ========================================
    响应式设计
    ======================================== */
+@media (max-width: 992px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+    }
+}
+
 @media (max-width: 768px) {
     .hero {
         min-height: 50vh;
@@ -634,7 +641,7 @@ body {
     }
     
     .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: 1fr;
         gap: var(--space-md);
     }
     
@@ -669,20 +676,6 @@ body {
     
     .floating-bee {
         display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .card-image {
-        height: 160px;
-    }
-    
-    .card-chinese-name {
-        font-size: 1.5rem;
     }
 }
 

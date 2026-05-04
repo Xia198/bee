@@ -12,7 +12,10 @@
 <body>
     <!-- 背景装饰 -->
     <div class="bg-decoration">
-        <!-- 唯美渐变背景 -->
+        <!-- 真实背景图片 -->
+        <div class="background-image"></div>
+        
+        <!-- 唯美渐变遮罩 -->
         <div class="gradient-bg"></div>
         
         <!-- 细腻纹理层 -->
@@ -73,24 +76,32 @@
             <h1 class="title-main">
                 <span class="title-bee-icon">
                     <svg viewBox="0 0 100 100" width="80" height="80">
-                        <ellipse cx="50" cy="55" rx="25" ry="30" fill="#F4A020"/>
-                        <rect x="25" y="40" width="50" height="8" fill="#2D2D2D"/>
-                        <rect x="25" y="60" width="50" height="8" fill="#2D2D2D"/>
-                        <circle cx="50" cy="25" r="18" fill="#2D2D2D"/>
+                        <ellipse cx="50" cy="55" rx="25" ry="30" fill="#C4A35A"/>
+                        <rect x="25" y="40" width="50" height="8" fill="#2D5016" opacity="0.7"/>
+                        <rect x="25" y="60" width="50" height="8" fill="#2D5016" opacity="0.7"/>
+                        <circle cx="50" cy="25" r="18" fill="#3D2914"/>
                         <circle cx="43" cy="22" r="5" fill="white"/>
                         <circle cx="57" cy="22" r="5" fill="white"/>
-                        <circle cx="43" cy="22" r="2.5" fill="#2D2D2D"/>
-                        <circle cx="57" cy="22" r="2.5" fill="#2D2D2D"/>
-                        <ellipse cx="25" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.8" transform="rotate(-40 25 40)"/>
-                        <ellipse cx="75" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.8" transform="rotate(40 75 40)"/>
-                        <ellipse cx="25" cy="55" rx="20" ry="12" fill="#E8E8E8" opacity="0.8" transform="rotate(-50 25 55)"/>
-                        <ellipse cx="75" cy="55" rx="20" ry="12" fill="#E8E8E8" opacity="0.8" transform="rotate(50 75 55)"/>
-                        <path d="M40 85 Q50 95 60 85" stroke="#2D2D2D" stroke-width="3" fill="none"/>
+                        <circle cx="43" cy="22" r="2.5" fill="#1a1a1a"/>
+                        <circle cx="57" cy="22" r="2.5" fill="#1a1a1a"/>
+                        <ellipse cx="25" cy="40" rx="20" ry="12" fill="rgba(255,255,255,0.6)" transform="rotate(-40 25 40)"/>
+                        <ellipse cx="75" cy="40" rx="20" ry="12" fill="rgba(255,255,255,0.6)" transform="rotate(40 75 40)"/>
+                        <ellipse cx="25" cy="55" rx="20" ry="12" fill="rgba(255,255,255,0.6)" transform="rotate(-50 25 55)"/>
+                        <ellipse cx="75" cy="55" rx="20" ry="12" fill="rgba(255,255,255,0.6)" transform="rotate(50 75 55)"/>
                     </svg>
                 </span>
                 九种蜜蜂属图鉴
             </h1>
             <p class="subtitle">探索神奇的蜜蜂世界 · Nine Species of Apis</p>
+            
+            <!-- 入场蜜蜂触发器 -->
+            <div class="entry-bee-container" id="entryBeeContainer">
+                <div class="entry-bee" id="entryBee">
+                    <img src="images/bee10.png" alt="点击进入">
+                </div>
+                <p class="entry-hint">点击蜜蜂进入</p>
+            </div>
+            
             <p class="hint">点击卡片了解更多</p>
         </div>
         <div class="scroll-indicator">

@@ -189,6 +189,8 @@ const beeModal = document.getElementById('beeModal');
 const modalOverlay = document.getElementById('modalOverlay');
 const modalClose = document.getElementById('modalClose');
 const modalBody = document.getElementById('modalBody');
+const entryBee = document.getElementById('entryBee');
+const entryBeeContainer = document.getElementById('entryBeeContainer');
 
 // 初始化页面
 document.addEventListener('DOMContentLoaded', () => {
@@ -196,7 +198,62 @@ document.addEventListener('DOMContentLoaded', () => {
     setupModalEvents();
     initBeeCursor();
     initFlowerEffect();
+    initEntryAnimation();
 });
+
+// ========================================
+// 入场动画
+// ========================================
+function initEntryAnimation() {
+    // 检查是否已经触发过
+    if (sessionStorage.getItem('beeEntryComplete')) {
+        completeEntry();
+        return;
+    }
+
+    // 初始状态：卡片隐藏
+    beeGrid.classList.add('hidden-cards');
+
+    // 点击蜜蜂触发动画
+    if (entryBee) {
+        entryBee.addEventListener('click', triggerEntryAnimation);
+    }
+}
+
+function triggerEntryAnimation() {
+    if (entryBee) {
+        entryBee.classList.add('fly-away');
+    }
+
+    // 1秒后显示卡片
+    setTimeout(() => {
+        completeEntry();
+        sessionStorage.setItem('beeEntryComplete', 'true');
+    }, 1000);
+}
+
+function completeEntry() {
+    // 隐藏蜜蜂容器
+    if (entryBeeContainer) {
+        entryBeeContainer.classList.add('hidden');
+    }
+
+    // 显示卡片
+    beeGrid.classList.remove('hidden-cards');
+    beeGrid.classList.add('reveal-cards');
+
+    // 隐藏/显示提示
+    const hint = document.querySelector('.hint');
+    if (hint) {
+        hint.classList.remove('hidden');
+    }
+
+    // 滚动指示器
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.style.display = 'flex';
+    }
+}
 
 // ========================================
 // 蜜蜂跟随效果（鼠标旁边）

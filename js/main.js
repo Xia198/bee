@@ -206,30 +206,27 @@ function initBeeCursor() {
     const beeFollower = document.createElement('div');
     beeFollower.id = 'bee-follower';
     beeFollower.innerHTML = `
-        <svg viewBox="0 0 60 60" width="35" height="35">
+        <svg viewBox="0 0 60 60" width="32" height="32">
             <!-- 翅膀 -->
-            <ellipse class="wing" cx="16" cy="22" rx="14" ry="10" fill="#E8E8E8" opacity="0.8" transform="rotate(-35 16 22)"/>
-            <ellipse class="wing" cx="44" cy="22" rx="14" ry="10" fill="#E8E8E8" opacity="0.8" transform="rotate(35 44 22)"/>
-            <ellipse class="wing" cx="14" cy="32" rx="12" ry="8" fill="#E8E8E8" opacity="0.6" transform="rotate(-45 14 32)"/>
-            <ellipse class="wing" cx="46" cy="32" rx="12" ry="8" fill="#E8E8E8" opacity="0.6" transform="rotate(45 46 32)"/>
+            <ellipse class="wing" cx="14" cy="20" rx="12" ry="8" fill="rgba(255,255,255,0.65)" transform="rotate(-35 14 20)"/>
+            <ellipse class="wing" cx="46" cy="20" rx="12" ry="8" fill="rgba(255,255,255,0.65)" transform="rotate(35 46 20)"/>
+            <ellipse class="wing" cx="12" cy="30" rx="10" ry="6" fill="rgba(255,255,255,0.5)" transform="rotate(-45 12 30)"/>
+            <ellipse class="wing" cx="48" cy="30" rx="10" ry="6" fill="rgba(255,255,255,0.5)" transform="rotate(45 48 30)"/>
             <!-- 身体 -->
-            <ellipse cx="30" cy="35" rx="15" ry="18" fill="#F4A020"/>
-            <rect x="15" y="28" width="30" height="5" fill="#2D2D2D"/>
-            <rect x="15" y="38" width="30" height="5" fill="#2D2D2D"/>
+            <ellipse cx="30" cy="34" rx="14" ry="17" fill="#C4A35A"/>
+            <rect x="16" y="26" width="28" height="4" fill="#2D5016" opacity="0.65"/>
+            <rect x="16" y="35" width="28" height="4" fill="#2D5016" opacity="0.65"/>
+            <rect x="16" y="44" width="28" height="3" fill="#2D5016" opacity="0.5"/>
             <!-- 头部 -->
-            <circle cx="30" cy="16" r="12" fill="#2D2D2D"/>
+            <circle cx="30" cy="15" r="11" fill="#3D2914"/>
             <!-- 眼睛 -->
-            <circle cx="25" cy="14" r="4" fill="white"/>
-            <circle cx="35" cy="14" r="4" fill="white"/>
-            <circle cx="26" cy="14" r="2" fill="#2D2D2D"/>
-            <circle cx="36" cy="14" r="2" fill="#2D2D2D"/>
+            <circle cx="25" cy="13" r="3.5" fill="white"/>
+            <circle cx="35" cy="13" r="3.5" fill="white"/>
+            <circle cx="26" cy="13" r="1.8" fill="#1a1a1a"/>
+            <circle cx="36" cy="13" r="1.8" fill="#1a1a1a"/>
             <!-- 触角 -->
-            <path d="M23 6 Q20 0 16 -2" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M37 6 Q40 0 44 -2" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- 小腿 -->
-            <path d="M18 50 Q12 55 8 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
-            <path d="M30 52 Q30 58 27 62" stroke="#2D2D2D" stroke-width="2" fill="none"/>
-            <path d="M42 50 Q48 55 52 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+            <path d="M23 5 Q20 -1 16 -3" stroke="#3D2914" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M37 5 Q40 -1 44 -3" stroke="#3D2914" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
     `;
     document.body.appendChild(beeFollower);
@@ -263,54 +260,23 @@ function initBeeCursor() {
 }
 
 // ========================================
-// 点击碎花效果
+// 点击光晕效果
 // ========================================
 function initFlowerEffect() {
-    // 碎花SVG - 各种花瓣形状
-    const petalSVGs = [
-        // 粉色花瓣
-        `<svg viewBox="0 0 20 20" width="20" height="20"><ellipse cx="10" cy="10" rx="6" ry="10" fill="#FFB6C1"/></svg>`,
-        // 紫色花瓣
-        `<svg viewBox="0 0 20 20" width="18" height="18"><ellipse cx="10" cy="10" rx="5" ry="9" fill="#DDA0DD"/></svg>`,
-        // 黄色花瓣
-        `<svg viewBox="0 0 20 20" width="16" height="16"><ellipse cx="10" cy="10" rx="6" ry="8" fill="#FFD700"/></svg>`,
-        // 白色花瓣
-        `<svg viewBox="0 0 20 20" width="14" height="14"><ellipse cx="10" cy="10" rx="5" ry="7" fill="#FFF0F5"/></svg>`,
-        // 橙色花瓣
-        `<svg viewBox="0 0 20 20" width="15" height="15"><ellipse cx="10" cy="10" rx="5" ry="8" fill="#FFA07A"/></svg>`,
-        // 浅蓝色花瓣
-        `<svg viewBox="0 0 20 20" width="12" height="12"><ellipse cx="10" cy="10" rx="4" ry="6" fill="#ADD8E6"/></svg>`,
-    ];
-
     document.addEventListener('click', (e) => {
         // 不在弹窗内创建效果
         if (e.target.closest('.modal')) return;
 
-        // 创建多个碎花向四周散开
-        for (let i = 0; i < 8; i++) {
-            const petal = document.createElement('div');
-            petal.className = 'click-petal';
-            petal.innerHTML = petalSVGs[Math.floor(Math.random() * petalSVGs.length)];
+        // 创建唯美光晕效果
+        const glow = document.createElement('div');
+        glow.className = 'click-glow';
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+        document.body.appendChild(glow);
 
-            // 随机散开方向
-            const angle = (Math.PI * 2 / 8) * i + Math.random() * 0.5;
-            const distance = 50 + Math.random() * 60;
-            const tx = Math.cos(angle) * distance;
-            const ty = Math.sin(angle) * distance - 30; // 稍微向上
-            const rot = Math.random() * 720 - 360;
-
-            petal.style.left = e.clientX + 'px';
-            petal.style.top = e.clientY + 'px';
-            petal.style.setProperty('--tx', tx + 'px');
-            petal.style.setProperty('--ty', ty + 'px');
-            petal.style.setProperty('--rot', rot + 'deg');
-
-            document.body.appendChild(petal);
-
-            setTimeout(() => {
-                petal.remove();
-            }, 1200);
-        }
+        setTimeout(() => {
+            glow.remove();
+        }, 1000);
     });
 }
 

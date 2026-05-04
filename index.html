@@ -6,74 +6,63 @@
     <title>九种蜜蜂属图鉴 | Nine Bees Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Playfair+Display:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <!-- 背景装饰 -->
     <div class="bg-decoration">
-        <!-- 森林背景层 -->
-        <div class="forest-bg">
-            <svg viewBox="0 0 1920 600" preserveAspectRatio="xMidYMax slice" width="100%" height="100%">
-                <!-- 远景森林 -->
-                <g opacity="0.3">
-                    <path d="M0 600 L0 400 Q100 350 200 400 Q300 300 400 380 Q500 320 600 400 Q700 280 800 360 Q900 300 1000 380 Q1100 320 1200 400 Q1300 280 1400 360 Q1500 300 1600 380 Q1700 320 1800 400 Q1900 350 1920 400 L1920 600 Z" fill="#2E7D32"/>
-                    <path d="M0 600 L0 450 Q150 380 300 440 Q450 360 600 420 Q750 340 900 400 Q1050 350 1200 420 Q1350 360 1500 420 Q1650 350 1800 400 L1920 440 L1920 600 Z" fill="#388E3C"/>
-                    <path d="M0 600 L0 500 Q200 450 400 490 Q600 440 800 480 Q1000 430 1200 470 Q1400 420 1600 460 Q1800 430 1920 450 L1920 600 Z" fill="#43A047"/>
-                </g>
-                <!-- 树冠剪影 -->
-                <g opacity="0.2">
-                    <path d="M50 600 L50 480 L80 400 L100 480 L130 420 L160 480 L190 380 L220 480 L260 400 L300 480 L350 350 L400 480 L450 400 L500 480 L550 420 L600 480 L650 380 L700 480 L750 400 L800 480 L850 350 L900 480 L950 400 L1000 480 L1050 420 L1100 480 L1150 380 L1200 480 L1250 400 L1300 480 L1350 350 L1400 480 L1450 400 L1500 480 L1550 420 L1600 480 L1650 380 L1700 480 L1750 400 L1800 480 L1850 420 L1900 480 L1920 450 L1920 600 Z" fill="#1B5E20"/>
-                </g>
+        <!-- 唯美渐变背景 -->
+        <div class="gradient-bg"></div>
+        
+        <!-- 细腻纹理层 -->
+        <div class="texture-overlay"></div>
+        
+        <!-- 森林剪影 -->
+        <div class="forest-silhouette">
+            <svg viewBox="0 0 1920 400" preserveAspectRatio="xMidYMax slice">
+                <path d="M0 400 L0 250 Q100 200 200 240 Q350 160 500 220 Q650 140 800 200 Q950 120 1100 180 Q1250 100 1400 160 Q1550 80 1700 140 Q1850 60 1920 100 L1920 400 Z" fill="#2D5016"/>
+                <path d="M0 400 L0 300 Q150 260 300 290 Q450 240 600 280 Q750 220 900 260 Q1050 200 1200 240 Q1350 180 1500 220 Q1650 160 1800 200 L1920 220 L1920 400 Z" fill="#3D6B1E"/>
+                <path d="M0 400 L0 350 Q200 320 400 350 Q600 310 800 340 Q1000 300 1200 330 Q1400 290 1600 320 Q1800 280 1920 300 L1920 400 Z" fill="#4A7F23"/>
             </svg>
         </div>
         
-        <!-- 抽象花朵纹理 -->
-        <div class="flower-pattern"></div>
+        <!-- 装饰线条 -->
+        <div class="decorative-line line-1"></div>
+        <div class="decorative-line line-2"></div>
+        <div class="decorative-line line-3"></div>
         
-        <!-- 飘落的花瓣 -->
-        <div class="petal-container">
-            <div class="falling-petal petal-1"></div>
-            <div class="falling-petal petal-2"></div>
-            <div class="falling-petal petal-3"></div>
-            <div class="falling-petal petal-4"></div>
-            <div class="falling-petal petal-5"></div>
-            <div class="falling-petal petal-6"></div>
+        <!-- 浮动光斑 -->
+        <div class="light-spots">
+            <div class="light-spot spot-1"></div>
+            <div class="light-spot spot-2"></div>
+            <div class="light-spot spot-3"></div>
+            <div class="light-spot spot-4"></div>
         </div>
-        
-        <!-- 蜂巢六边形 -->
-        <div class="hexagon hex-1"></div>
-        <div class="hexagon hex-2"></div>
-        <div class="hexagon hex-3"></div>
-        <div class="hexagon hex-4"></div>
-        <div class="hexagon hex-5"></div>
-        <div class="hexagon hex-6"></div>
         
         <!-- 浮动的小蜜蜂 -->
         <div class="floating-bee bee-1">
-            <svg viewBox="0 0 100 100" width="60" height="60">
-                <ellipse cx="50" cy="55" rx="25" ry="30" fill="#F4A020"/>
-                <ellipse cx="50" cy="55" rx="25" ry="30" fill="url(#stripes)" opacity="0.8"/>
-                <circle cx="50" cy="25" r="18" fill="#2D2D2D"/>
-                <circle cx="43" cy="22" r="5" fill="white"/>
-                <circle cx="57" cy="22" r="5" fill="white"/>
-                <circle cx="43" cy="22" r="2.5" fill="#2D2D2D"/>
-                <circle cx="57" cy="22" r="2.5" fill="#2D2D2D"/>
-                <ellipse cx="30" cy="35" rx="18" ry="10" fill="#E8E8E8" opacity="0.7" transform="rotate(-30 30 35)"/>
-                <ellipse cx="70" cy="35" rx="18" ry="10" fill="#E8E8E8" opacity="0.7" transform="rotate(30 70 35)"/>
-                <defs>
-                    <pattern id="stripes" patternUnits="userSpaceOnUse" width="10" height="10">
-                        <rect width="10" height="5" fill="#2D2D2D"/>
-                    </pattern>
-                </defs>
+            <svg viewBox="0 0 100 100" width="50" height="50">
+                <ellipse cx="50" cy="55" rx="22" ry="28" fill="#C4A35A"/>
+                <rect x="28" y="42" width="44" height="6" fill="#2D5016" opacity="0.7"/>
+                <rect x="28" y="54" width="44" height="6" fill="#2D5016" opacity="0.7"/>
+                <circle cx="50" cy="26" r="16" fill="#3D2914"/>
+                <circle cx="44" cy="23" r="4" fill="white"/>
+                <circle cx="56" cy="23" r="4" fill="white"/>
+                <circle cx="44" cy="23" r="2" fill="#1a1a1a"/>
+                <circle cx="56" cy="23" r="2" fill="#1a1a1a"/>
+                <ellipse cx="28" cy="38" rx="16" ry="9" fill="rgba(255,255,255,0.6)" transform="rotate(-35 28 38)"/>
+                <ellipse cx="72" cy="38" rx="16" ry="9" fill="rgba(255,255,255,0.6)" transform="rotate(35 72 38)"/>
             </svg>
         </div>
         <div class="floating-bee bee-2">
-            <svg viewBox="0 0 100 100" width="45" height="45">
-                <ellipse cx="50" cy="55" rx="25" ry="30" fill="#F4A020"/>
-                <circle cx="50" cy="25" r="18" fill="#2D2D2D"/>
-                <ellipse cx="30" cy="35" rx="18" ry="10" fill="#E8E8E8" opacity="0.7" transform="rotate(-30 30 35)"/>
-                <ellipse cx="70" cy="35" rx="18" ry="10" fill="#E8E8E8" opacity="0.7" transform="rotate(30 70 35)"/>
+            <svg viewBox="0 0 100 100" width="38" height="38">
+                <ellipse cx="50" cy="55" rx="22" ry="28" fill="#C4A35A"/>
+                <rect x="28" y="42" width="44" height="6" fill="#2D5016" opacity="0.7"/>
+                <rect x="28" y="54" width="44" height="6" fill="#2D5016" opacity="0.7"/>
+                <circle cx="50" cy="26" r="16" fill="#3D2914"/>
+                <ellipse cx="28" cy="38" rx="16" ry="9" fill="rgba(255,255,255,0.6)" transform="rotate(-35 28 38)"/>
+                <ellipse cx="72" cy="38" rx="16" ry="9" fill="rgba(255,255,255,0.6)" transform="rotate(35 72 38)"/>
             </svg>
         </div>
     </div>

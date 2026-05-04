@@ -708,89 +708,65 @@ body {
 }
 
 /* ========================================
-   卡通蜜蜂鼠标效果
+   蜜蜂跟随效果（鼠标旁边）
    ======================================== */
-#custom-cursor {
+#bee-follower {
     position: fixed;
     pointer-events: none;
     z-index: 10000;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    transition: left 0.1s ease-out, top 0.1s ease-out;
 }
 
-#custom-cursor svg {
-    animation: cursorWings 0.2s ease-in-out infinite alternate;
+#bee-follower svg {
+    animation: beeWiggle 0.5s ease-in-out infinite;
 }
 
-@keyframes cursorWings {
+@keyframes beeWiggle {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+#bee-follower .wing {
+    animation: wingFlap 0.1s ease-in-out infinite alternate;
+}
+
+@keyframes wingFlap {
     0% { transform: scaleY(1); }
-    100% { transform: scaleY(0.9); }
-}
-
-#custom-cursor.hover {
-    transform: translate(-50%, -50%) scale(0.7);
-}
-
-#custom-cursor.hover svg {
-    animation: none;
+    100% { transform: scaleY(0.7); }
 }
 
 /* ========================================
-   点击花朵效果
+   点击碎花效果
    ======================================== */
-.click-flower {
+.click-petal {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    animation: flowerAppear 1.5s ease-out forwards;
+    animation: petalScatter 1.2s ease-out forwards;
 }
 
-@keyframes flowerAppear {
+@keyframes petalScatter {
     0% {
         opacity: 1;
-        transform: scale(0) rotate(0deg) translateY(0);
+        transform: translate(0, 0) rotate(0deg) scale(1);
     }
     20% {
         opacity: 1;
-        transform: scale(var(--scale, 1)) rotate(var(--rotation, 0deg)) translateY(0);
     }
     100% {
         opacity: 0;
-        transform: scale(0.5) rotate(var(--rotation, 0deg)) translateY(-100px);
-    }
-}
-
-/* 花朵飘落效果 */
-.click-flower:nth-child(odd) {
-    animation: flowerFall 1.5s ease-out forwards;
-}
-
-@keyframes flowerFall {
-    0% {
-        opacity: 1;
-        transform: scale(var(--scale, 1)) rotate(0deg) translateY(0);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(var(--scale, 1)) rotate(calc(var(--rotation, 0deg) + 180deg)) translateY(-50px);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.3) rotate(calc(var(--rotation, 0deg) + 360deg)) translateY(80px);
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3);
     }
 }
 
 /* ========================================
-   移动端隐藏自定义鼠标
+   移动端隐藏跟随蜜蜂
    ======================================== */
 @media (max-width: 768px) {
-    #custom-cursor {
+    #bee-follower {
         display: none;
-    }
-    
-    body {
-        cursor: auto;
     }
 }
 

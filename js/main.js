@@ -199,170 +199,118 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========================================
-// 卡通蜜蜂鼠标效果
+// 蜜蜂跟随效果（鼠标旁边）
 // ========================================
 function initBeeCursor() {
-    // 创建自定义鼠标元素
-    const cursorBee = document.createElement('div');
-    cursorBee.id = 'custom-cursor';
-    cursorBee.innerHTML = `
-        <svg viewBox="0 0 60 60" width="40" height="40">
-            <!-- 蜜蜂身体 -->
+    // 创建蜜蜂跟随元素
+    const beeFollower = document.createElement('div');
+    beeFollower.id = 'bee-follower';
+    beeFollower.innerHTML = `
+        <svg viewBox="0 0 60 60" width="35" height="35">
+            <!-- 翅膀 -->
+            <ellipse class="wing" cx="16" cy="22" rx="14" ry="10" fill="#E8E8E8" opacity="0.8" transform="rotate(-35 16 22)"/>
+            <ellipse class="wing" cx="44" cy="22" rx="14" ry="10" fill="#E8E8E8" opacity="0.8" transform="rotate(35 44 22)"/>
+            <ellipse class="wing" cx="14" cy="32" rx="12" ry="8" fill="#E8E8E8" opacity="0.6" transform="rotate(-45 14 32)"/>
+            <ellipse class="wing" cx="46" cy="32" rx="12" ry="8" fill="#E8E8E8" opacity="0.6" transform="rotate(45 46 32)"/>
+            <!-- 身体 -->
             <ellipse cx="30" cy="35" rx="15" ry="18" fill="#F4A020"/>
             <rect x="15" y="28" width="30" height="5" fill="#2D2D2D"/>
             <rect x="15" y="38" width="30" height="5" fill="#2D2D2D"/>
-            <!-- 蜜蜂头部 -->
-            <circle cx="30" cy="18" r="12" fill="#2D2D2D"/>
+            <!-- 头部 -->
+            <circle cx="30" cy="16" r="12" fill="#2D2D2D"/>
             <!-- 眼睛 -->
-            <circle cx="26" cy="16" r="4" fill="white"/>
-            <circle cx="34" cy="16" r="4" fill="white"/>
-            <circle cx="27" cy="16" r="2" fill="#2D2D2D"/>
-            <circle cx="35" cy="16" r="2" fill="#2D2D2D"/>
+            <circle cx="25" cy="14" r="4" fill="white"/>
+            <circle cx="35" cy="14" r="4" fill="white"/>
+            <circle cx="26" cy="14" r="2" fill="#2D2D2D"/>
+            <circle cx="36" cy="14" r="2" fill="#2D2D2D"/>
             <!-- 触角 -->
-            <path d="M24 8 Q22 2 18 0" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M36 8 Q38 2 42 0" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- 翅膀 -->
-            <ellipse cx="18" cy="25" rx="12" ry="8" fill="#E8E8E8" opacity="0.8" transform="rotate(-30 18 25)"/>
-            <ellipse cx="42" cy="25" rx="12" ry="8" fill="#E8E8E8" opacity="0.8" transform="rotate(30 42 25)"/>
-            <ellipse cx="16" cy="32" rx="10" ry="6" fill="#E8E8E8" opacity="0.6" transform="rotate(-40 16 32)"/>
-            <ellipse cx="44" cy="32" rx="10" ry="6" fill="#E8E8E8" opacity="0.6" transform="rotate(40 44 32)"/>
+            <path d="M23 6 Q20 0 16 -2" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M37 6 Q40 0 44 -2" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
             <!-- 小腿 -->
-            <path d="M20 50 Q15 55 12 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
-            <path d="M30 52 Q30 58 28 62" stroke="#2D2D2D" stroke-width="2" fill="none"/>
-            <path d="M40 50 Q45 55 48 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
-            <!-- 微笑 -->
-            <path d="M25 22 Q30 26 35 22" stroke="#F4A020" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M18 50 Q12 55 8 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+            <path d="M30 52 Q30 58 27 62" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+            <path d="M42 50 Q48 55 52 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
         </svg>
     `;
-    document.body.appendChild(cursorBee);
+    document.body.appendChild(beeFollower);
 
-    // 翅膀动画
-    const wings = cursorBee.querySelectorAll('ellipse:nth-child(n+5)');
-    let wingPhase = 0;
-
-    function animateWings() {
-        wingPhase += 0.15;
-        wings.forEach((wing, i) => {
-            const offset = i % 2 === 0 ? Math.sin(wingPhase + i * 0.5) * 3 : Math.cos(wingPhase + i * 0.5) * 3;
-            wing.setAttribute('ry', 8 + offset);
-        });
-        requestAnimationFrame(animateWings);
-    }
-    animateWings();
-
-    // 鼠标移动事件
     let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
+    let beeX = 0, beeY = 0;
+    let time = 0;
 
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    // 平滑跟随动画
-    function updateCursor() {
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
+    // 平滑跟随动画，带有上下摆动
+    function updateBee() {
+        time += 0.08;
+        beeX += (mouseX - beeX) * 0.12;
+        beeY += (mouseY - beeY) * 0.12;
 
-        cursorBee.style.left = (cursorX - 20) + 'px';
-        cursorBee.style.top = (cursorY - 20) + 'px';
+        // 添加轻微的上下浮动
+        const wobble = Math.sin(time) * 3;
+        const offsetX = 25; // 蜜蜂在鼠标右侧
+        const offsetY = -5 + wobble; // 稍微偏上
 
-        requestAnimationFrame(updateCursor);
+        beeFollower.style.left = (beeX + offsetX) + 'px';
+        beeFollower.style.top = (beeY + offsetY) + 'px';
+
+        requestAnimationFrame(updateBee);
     }
-    updateCursor();
-
-    // 悬停在可点击元素上时缩小
-    document.addEventListener('mouseover', (e) => {
-        if (e.target.closest('button, a, .bee-card, .modal-close')) {
-            cursorBee.classList.add('hover');
-        }
-    });
-
-    document.addEventListener('mouseout', (e) => {
-        if (e.target.closest('button, a, .bee-card, .modal-close')) {
-            cursorBee.classList.remove('hover');
-        }
-    });
-
-    // 隐藏默认鼠标
-    document.body.style.cursor = 'none';
+    updateBee();
 }
 
 // ========================================
-// 点击花朵效果
+// 点击碎花效果
 // ========================================
 function initFlowerEffect() {
-    // 花朵SVG模板
-    const flowerSVGs = [
-        // 雏菊样式
-        `<svg viewBox="0 0 50 50" width="30" height="30">
-            <circle cx="25" cy="12" r="8" fill="#FFB6C1"/>
-            <circle cx="38" cy="18" r="8" fill="#FFB6C1"/>
-            <circle cx="38" cy="32" r="8" fill="#FFB6C1"/>
-            <circle cx="25" cy="38" r="8" fill="#FFB6C1"/>
-            <circle cx="12" cy="32" r="8" fill="#FFB6C1"/>
-            <circle cx="12" cy="18" r="8" fill="#FFB6C1"/>
-            <circle cx="25" cy="25" r="8" fill="#FFD700"/>
-        </svg>`,
-        // 五瓣花
-        `<svg viewBox="0 0 50 50" width="30" height="30">
-            <ellipse cx="25" cy="12" rx="8" ry="12" fill="#FF69B4"/>
-            <ellipse cx="37" cy="20" rx="8" ry="12" fill="#FF69B4" transform="rotate(72 37 20)"/>
-            <ellipse cx="33" cy="36" rx="8" ry="12" fill="#FF69B4" transform="rotate(144 33 36)"/>
-            <ellipse cx="17" cy="36" rx="8" ry="12" fill="#FF69B4" transform="rotate(216 17 36)"/>
-            <ellipse cx="13" cy="20" rx="8" ry="12" fill="#FF69B4" transform="rotate(288 13 20)"/>
-            <circle cx="25" cy="25" r="6" fill="#FFD700"/>
-        </svg>`,
-        // 紫色小花
-        `<svg viewBox="0 0 50 50" width="30" height="30">
-            <circle cx="25" cy="10" r="7" fill="#9370DB"/>
-            <circle cx="38" cy="18" r="7" fill="#9370DB"/>
-            <circle cx="35" cy="32" r="7" fill="#9370DB"/>
-            <circle cx="15" cy="32" r="7" fill="#9370DB"/>
-            <circle cx="12" cy="18" r="7" fill="#9370DB"/>
-            <circle cx="25" cy="25" r="5" fill="#FFD700"/>
-        </svg>`,
-        // 向日葵样式
-        `<svg viewBox="0 0 50 50" width="30" height="30">
-            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700"/>
-            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700" transform="rotate(45 25 25)"/>
-            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700" transform="rotate(90 25 25)"/>
-            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700" transform="rotate(135 25 25)"/>
-            <ellipse cx="25" cy="42" rx="5" ry="10" fill="#FFD700" transform="rotate(45 25 25)"/>
-            <ellipse cx="25" cy="42" rx="5" ry="10" fill="#FFD700" transform="rotate(90 25 25)"/>
-            <ellipse cx="25" cy="42" rx="5" ry="10" fill="#FFD700" transform="rotate(135 25 25)"/>
-            <ellipse cx="8" cy="25" rx="10" ry="5" fill="#FFD700" transform="rotate(45 25 25)"/>
-            <ellipse cx="42" cy="25" rx="10" ry="5" fill="#FFD700" transform="rotate(45 25 25)"/>
-            <circle cx="25" cy="25" r="8" fill="#8B4513"/>
-        </svg>`
+    // 碎花SVG - 各种花瓣形状
+    const petalSVGs = [
+        // 粉色花瓣
+        `<svg viewBox="0 0 20 20" width="20" height="20"><ellipse cx="10" cy="10" rx="6" ry="10" fill="#FFB6C1"/></svg>`,
+        // 紫色花瓣
+        `<svg viewBox="0 0 20 20" width="18" height="18"><ellipse cx="10" cy="10" rx="5" ry="9" fill="#DDA0DD"/></svg>`,
+        // 黄色花瓣
+        `<svg viewBox="0 0 20 20" width="16" height="16"><ellipse cx="10" cy="10" rx="6" ry="8" fill="#FFD700"/></svg>`,
+        // 白色花瓣
+        `<svg viewBox="0 0 20 20" width="14" height="14"><ellipse cx="10" cy="10" rx="5" ry="7" fill="#FFF0F5"/></svg>`,
+        // 橙色花瓣
+        `<svg viewBox="0 0 20 20" width="15" height="15"><ellipse cx="10" cy="10" rx="5" ry="8" fill="#FFA07A"/></svg>`,
+        // 浅蓝色花瓣
+        `<svg viewBox="0 0 20 20" width="12" height="12"><ellipse cx="10" cy="10" rx="4" ry="6" fill="#ADD8E6"/></svg>`,
     ];
 
-    let clickCount = 0;
-
     document.addEventListener('click', (e) => {
-        // 不在弹窗内创建花朵
+        // 不在弹窗内创建效果
         if (e.target.closest('.modal')) return;
 
-        clickCount++;
-        const flowerIndex = clickCount % flowerSVGs.length;
-        const flower = document.createElement('div');
-        flower.className = 'click-flower';
-        flower.innerHTML = flowerSVGs[flowerIndex];
-        flower.style.left = (e.clientX - 15) + 'px';
-        flower.style.top = (e.clientY - 15) + 'px';
+        // 创建多个碎花向四周散开
+        for (let i = 0; i < 8; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'click-petal';
+            petal.innerHTML = petalSVGs[Math.floor(Math.random() * petalSVGs.length)];
 
-        // 随机旋转
-        const rotation = Math.random() * 360;
-        const scale = 0.5 + Math.random() * 0.5;
-        flower.style.setProperty('--rotation', rotation + 'deg');
-        flower.style.setProperty('--scale', scale);
+            // 随机散开方向
+            const angle = (Math.PI * 2 / 8) * i + Math.random() * 0.5;
+            const distance = 50 + Math.random() * 60;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 30; // 稍微向上
+            const rot = Math.random() * 720 - 360;
 
-        document.body.appendChild(flower);
+            petal.style.left = e.clientX + 'px';
+            petal.style.top = e.clientY + 'px';
+            petal.style.setProperty('--tx', tx + 'px');
+            petal.style.setProperty('--ty', ty + 'px');
+            petal.style.setProperty('--rot', rot + 'deg');
 
-        // 移除动画后的元素
-        setTimeout(() => {
-            flower.remove();
-        }, 1500);
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 1200);
+        }
     });
 }
 

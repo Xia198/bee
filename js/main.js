@@ -260,23 +260,40 @@ function initBeeCursor() {
 }
 
 // ========================================
-// 点击光晕效果
+// 点击碎花效果
 // ========================================
 function initFlowerEffect() {
+    const petalSVGs = [
+        `<svg viewBox="0 0 20 20" width="18" height="18"><ellipse cx="10" cy="10" rx="5" ry="8" fill="#FFB6C1"/></svg>`,
+        `<svg viewBox="0 0 20 20" width="16" height="16"><ellipse cx="10" cy="10" rx="4" ry="7" fill="#DDA0DD"/></svg>`,
+        `<svg viewBox="0 0 20 20" width="14" height="14"><ellipse cx="10" cy="10" rx="4" ry="6" fill="#FFD700" opacity="0.8"/></svg>`,
+        `<svg viewBox="0 0 20 20" width="15" height="15"><ellipse cx="10" cy="10" rx="4" ry="7" fill="#FFF0F5"/></svg>`,
+        `<svg viewBox="0 0 20 20" width="12" height="12"><ellipse cx="10" cy="10" rx="4" ry="6" fill="#ADD8E6"/></svg>`,
+    ];
+
     document.addEventListener('click', (e) => {
-        // 不在弹窗内创建效果
+        // 只在卡片区域创建效果（排除弹窗内的点击）
         if (e.target.closest('.modal')) return;
 
-        // 创建唯美光晕效果
-        const glow = document.createElement('div');
-        glow.className = 'click-glow';
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
-        document.body.appendChild(glow);
+        for (let i = 0; i < 6; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'click-petal';
+            petal.innerHTML = petalSVGs[Math.floor(Math.random() * petalSVGs.length)];
 
-        setTimeout(() => {
-            glow.remove();
-        }, 1000);
+            const angle = (Math.PI * 2 / 6) * i + Math.random() * 0.5;
+            const distance = 40 + Math.random() * 50;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 20;
+
+            petal.style.left = e.clientX + 'px';
+            petal.style.top = e.clientY + 'px';
+            petal.style.setProperty('--tx', tx + 'px');
+            petal.style.setProperty('--ty', ty + 'px');
+            petal.style.setProperty('--rot', (Math.random() * 540 - 270) + 'deg');
+
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 1200);
+        }
     });
 }
 

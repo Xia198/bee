@@ -779,28 +779,26 @@ body {
 }
 
 /* ========================================
-   点击光晕效果
+   点击碎花效果
    ======================================== */
-.click-glow {
+.click-petal {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(196, 163, 90, 0.4) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    animation: glowFade 1s ease-out forwards;
+    animation: petalScatter 1.2s ease-out forwards;
 }
 
-@keyframes glowFade {
+@keyframes petalScatter {
     0% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(0.5);
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    20% {
+        opacity: 1;
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3);
     }
 }
 

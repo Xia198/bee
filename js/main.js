@@ -182,10 +182,6 @@ const beeImages = [
     'images/bee8.jpg',  // 印度大蜜蜂
     'images/bee9.jpg'   // 巴塔哥尼亚蜜蜂
 ];
-    'images/bee7.jpg',  // 巴塔哥尼亚蜜蜂
-    'images/bee8.jpg',  // 印度大蜜蜂
-    'images/bee9.jpg'   // 沙巴蜂
-];
 
 // DOM 元素
 const beeGrid = document.getElementById('beeGrid');

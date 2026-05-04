@@ -97,6 +97,24 @@ const beesData = [
     },
     {
         id: 6,
+        chineseName: '沙巴蜂',
+        latinName: 'Apis koschevnikovi',
+        preview: '马来西亚沙巴州的特有蜜蜂，较为稀有神秘。',
+        distribution: '马来西亚沙巴州、婆罗洲热带雨林',
+        habitat: '原始热带雨林',
+        features: [
+            '体长约11-13mm',
+            '体色深棕至黑色',
+            '腹部条纹细密',
+            '后翅腋脉特征明显',
+            '复眼结构独特'
+        ],
+        behavior: '沙巴蜂是婆罗洲热带雨林中的特有物种，生态习性与东方蜜蜂相似但有独特之处。由于栖息地受到砍伐和农业扩张的威胁，野生种群数量正在减少。',
+        funFact: '沙巴蜂是马来西亚沙巴州的骄傲，这种蜜蜂只在这片热带雨林中生活！',
+        status: '易危（VU）'
+    },
+    {
+        id: 7,
         chineseName: '吕宋蜂',
         latinName: 'Apis luzonica',
         preview: '菲律宾吕宋岛的特有蜜蜂种类，数量稀少。',
@@ -111,24 +129,6 @@ const beesData = [
         ],
         behavior: '吕宋蜂是菲律宾群岛的特有物种，对当地生态系统具有重要意义。它们与其他授粉昆虫共同维持着热带植物的繁殖。由于分布范围有限，种群数量较少。',
         funFact: '吕宋蜂是以菲律宾吕宋岛命名的，这种蜜蜂在当地被视为重要的授粉者！',
-        status: '易危（VU）'
-    },
-    {
-        id: 7,
-        chineseName: '巴塔哥尼亚蜜蜂',
-        latinName: 'Apis roratopsanky',
-        preview: '南美洲发现的蜜蜂种类，分布范围有限。',
-        distribution: '南美洲南部（阿根廷、智利等地）',
-        habitat: '温带森林、山地草原',
-        features: [
-            '体长约13-15mm',
-            '体色以深棕为主',
-            '腹部条纹不明显',
-            '翅脉特征独特',
-            '适应寒冷气候'
-        ],
-        behavior: '巴塔哥尼亚蜜蜂适应了南美洲南部的温带气候，能在较寒冷的环境中生存。它们是当地重要的授粉昆虫，对维持温带生态系统的平衡起着关键作用。',
-        funFact: '这种蜜蜂能在10°C以下的温度中活动，是蜜蜂家族中的"耐寒冠军"之一！',
         status: '易危（VU）'
     },
     {
@@ -151,20 +151,20 @@ const beesData = [
     },
     {
         id: 9,
-        chineseName: '沙巴蜂',
-        latinName: 'Apis koschevnikovi',
-        preview: '马来西亚沙巴州的特有蜜蜂，较为稀有神秘。',
-        distribution: '马来西亚沙巴州、婆罗洲热带雨林',
-        habitat: '原始热带雨林',
+        chineseName: '巴塔哥尼亚蜜蜂',
+        latinName: 'Apis roratopsanky',
+        preview: '南美洲发现的蜜蜂种类，分布范围有限。',
+        distribution: '南美洲南部（阿根廷、智利等地）',
+        habitat: '温带森林、山地草原',
         features: [
-            '体长约11-13mm',
-            '体色深棕至黑色',
-            '腹部条纹细密',
-            '后翅腋脉特征明显',
-            '复眼结构独特'
+            '体长约13-15mm',
+            '体色以深棕为主',
+            '腹部条纹不明显',
+            '翅脉特征独特',
+            '适应寒冷气候'
         ],
-        behavior: '沙巴蜂是婆罗洲热带雨林中的特有物种，生态习性与东方蜜蜂相似但有独特之处。由于栖息地受到砍伐和农业扩张的威胁，野生种群数量正在减少。',
-        funFact: '沙巴蜂是马来西亚沙巴州的骄傲，这种蜜蜂只在这片热带雨林中生活！',
+        behavior: '巴塔哥尼亚蜜蜂适应了南美洲南部的温带气候，能在较寒冷的环境中生存。它们是当地重要的授粉昆虫，对维持温带生态系统的平衡起着关键作用。',
+        funFact: '这种蜜蜂能在10°C以下的温度中活动，是蜜蜂家族中的"耐寒冠军"之一！',
         status: '易危（VU）'
     }
 ];
@@ -177,7 +177,11 @@ const beeImages = [
     'images/bee3.jpg',  // 大蜜蜂
     'images/bee4.jpg',  // 小蜜蜂
     'images/bee5.jpg',  // 黑小蜜蜂
-    'images/bee6.jpg',  // 吕宋蜂
+    'images/bee6.jpg',  // 沙巴蜂
+    'images/bee7.jpg',  // 吕宋蜂
+    'images/bee8.jpg',  // 印度大蜜蜂
+    'images/bee9.jpg'   // 巴塔哥尼亚蜜蜂
+];
     'images/bee7.jpg',  // 巴塔哥尼亚蜜蜂
     'images/bee8.jpg',  // 印度大蜜蜂
     'images/bee9.jpg'   // 沙巴蜂

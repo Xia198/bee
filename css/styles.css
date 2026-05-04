@@ -54,7 +54,7 @@ html {
 
 body {
     font-family: var(--font-body);
-    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-cream-dark) 100%);
+    background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 30%, #FFF8E1 70%, #FFECB3 100%);
     color: var(--color-text);
     min-height: 100vh;
     overflow-x: hidden;
@@ -75,12 +75,96 @@ body {
     overflow: hidden;
 }
 
+/* 森林背景层 */
+.forest-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+}
+
+/* 树影轮廓 */
+.tree-silhouette {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(27, 94, 32, 0.3), transparent);
+}
+
+/* 抽象花朵纹理 - 使用径向渐变和伪元素 */
+.flower-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.4) 0%, transparent 8%),
+        radial-gradient(circle at 80% 20%, rgba(255, 218, 185, 0.35) 0%, transparent 6%),
+        radial-gradient(circle at 60% 70%, rgba(221, 160, 221, 0.3) 0%, transparent 7%),
+        radial-gradient(circle at 10% 80%, rgba(176, 224, 230, 0.35) 0%, transparent 5%),
+        radial-gradient(circle at 90% 60%, rgba(255, 255, 224, 0.4) 0%, transparent 8%),
+        radial-gradient(circle at 40% 50%, rgba(255, 182, 193, 0.3) 0%, transparent 4%),
+        radial-gradient(circle at 70% 40%, rgba(230, 230, 250, 0.35) 0%, transparent 6%),
+        radial-gradient(circle at 25% 65%, rgba(255, 218, 185, 0.3) 0%, transparent 5%),
+        radial-gradient(circle at 85% 85%, rgba(221, 160, 221, 0.35) 0%, transparent 7%),
+        radial-gradient(circle at 50% 15%, rgba(176, 224, 230, 0.4) 0%, transparent 6%);
+    animation: flowerFloat 30s ease-in-out infinite;
+}
+
+/* 花瓣飘落效果 */
+.petal-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.falling-petal {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(ellipse at center, rgba(255, 182, 193, 0.6), rgba(255, 218, 185, 0.4));
+    border-radius: 50% 0 50% 50%;
+    animation: fall linear infinite;
+    opacity: 0.5;
+}
+
+.petal-1 { left: 10%; animation-duration: 15s; animation-delay: 0s; }
+.petal-2 { left: 25%; animation-duration: 18s; animation-delay: -3s; }
+.petal-3 { left: 40%; animation-duration: 20s; animation-delay: -5s; }
+.petal-4 { left: 55%; animation-duration: 16s; animation-delay: -8s; }
+.petal-5 { left: 70%; animation-duration: 19s; animation-delay: -2s; }
+.petal-6 { left: 85%; animation-duration: 17s; animation-delay: -6s; }
+
+@keyframes fall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.5;
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes flowerFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(10px, -10px) scale(1.02); }
+    50% { transform: translate(0, -5px) scale(1); }
+    75% { transform: translate(-10px, -10px) scale(1.01); }
+}
+
 /* 蜂巢六边形背景 */
 .hexagon {
     position: absolute;
     width: 100px;
     height: 115px;
-    background: linear-gradient(135deg, rgba(244, 160, 32, 0.08) 0%, rgba(212, 136, 15, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(244, 160, 32, 0.15) 0%, rgba(212, 136, 15, 0.08) 100%);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     animation: floatHexagon 20s ease-in-out infinite;
 }

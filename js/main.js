@@ -3,19 +3,6 @@
  * Nine Bees Gallery - Main JavaScript
  */
 
-// 蜜蜂图片URL（使用 Unsplash 免费图片）
-const beeImages = [
-    'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&h=400&fit=crop', // 西方蜜蜂
-    'https://images.unsplash.com/photo-1476067894307-60e5584b5e90?w=600&h=400&fit=crop', // 东方蜜蜂
-    'https://images.unsplash.com/photo-1589912433023-5e1f4b8f4a3e?w=600&h=400&fit=crop', // 大蜜蜂
-    'https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=600&h=400&fit=crop', // 小蜜蜂
-    'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&h=400&fit=crop', // 黑小蜜蜂
-    'https://images.unsplash.com/photo-1563713421683-7aa0e0d5a9b8?w=600&h=400&fit=crop', // 吕宋蜂
-    'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&h=400&fit=crop', // 巴塔哥尼亚蜜蜂
-    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&h=400&fit=crop', // 印度大蜜蜂
-    'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop'  // 沙巴蜂
-];
-
 // 九种蜜蜂属数据
 const beesData = [
     {
@@ -182,6 +169,20 @@ const beesData = [
     }
 ];
 
+// 九种蜜蜂对应的图片（用户需要下载替换）
+// 建议从 Pexels/Pixabay/Unsplash 下载对应品种的真实图片
+const beeImages = [
+    'images/bee1.jpg',  // 西方蜜蜂
+    'images/bee2.jpg',  // 东方蜜蜂
+    'images/bee3.jpg',  // 大蜜蜂
+    'images/bee4.jpg',  // 小蜜蜂
+    'images/bee5.jpg',  // 黑小蜜蜂
+    'images/bee6.jpg',  // 吕宋蜂
+    'images/bee7.jpg',  // 巴塔哥尼亚蜜蜂
+    'images/bee8.jpg',  // 印度大蜜蜂
+    'images/bee9.jpg'   // 沙巴蜂
+];
+
 // DOM 元素
 const beeGrid = document.getElementById('beeGrid');
 const beeModal = document.getElementById('beeModal');
@@ -193,7 +194,177 @@ const modalBody = document.getElementById('modalBody');
 document.addEventListener('DOMContentLoaded', () => {
     renderBeeCards();
     setupModalEvents();
+    initBeeCursor();
+    initFlowerEffect();
 });
+
+// ========================================
+// 卡通蜜蜂鼠标效果
+// ========================================
+function initBeeCursor() {
+    // 创建自定义鼠标元素
+    const cursorBee = document.createElement('div');
+    cursorBee.id = 'custom-cursor';
+    cursorBee.innerHTML = `
+        <svg viewBox="0 0 60 60" width="40" height="40">
+            <!-- 蜜蜂身体 -->
+            <ellipse cx="30" cy="35" rx="15" ry="18" fill="#F4A020"/>
+            <rect x="15" y="28" width="30" height="5" fill="#2D2D2D"/>
+            <rect x="15" y="38" width="30" height="5" fill="#2D2D2D"/>
+            <!-- 蜜蜂头部 -->
+            <circle cx="30" cy="18" r="12" fill="#2D2D2D"/>
+            <!-- 眼睛 -->
+            <circle cx="26" cy="16" r="4" fill="white"/>
+            <circle cx="34" cy="16" r="4" fill="white"/>
+            <circle cx="27" cy="16" r="2" fill="#2D2D2D"/>
+            <circle cx="35" cy="16" r="2" fill="#2D2D2D"/>
+            <!-- 触角 -->
+            <path d="M24 8 Q22 2 18 0" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M36 8 Q38 2 42 0" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- 翅膀 -->
+            <ellipse cx="18" cy="25" rx="12" ry="8" fill="#E8E8E8" opacity="0.8" transform="rotate(-30 18 25)"/>
+            <ellipse cx="42" cy="25" rx="12" ry="8" fill="#E8E8E8" opacity="0.8" transform="rotate(30 42 25)"/>
+            <ellipse cx="16" cy="32" rx="10" ry="6" fill="#E8E8E8" opacity="0.6" transform="rotate(-40 16 32)"/>
+            <ellipse cx="44" cy="32" rx="10" ry="6" fill="#E8E8E8" opacity="0.6" transform="rotate(40 44 32)"/>
+            <!-- 小腿 -->
+            <path d="M20 50 Q15 55 12 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+            <path d="M30 52 Q30 58 28 62" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+            <path d="M40 50 Q45 55 48 58" stroke="#2D2D2D" stroke-width="2" fill="none"/>
+            <!-- 微笑 -->
+            <path d="M25 22 Q30 26 35 22" stroke="#F4A020" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    `;
+    document.body.appendChild(cursorBee);
+
+    // 翅膀动画
+    const wings = cursorBee.querySelectorAll('ellipse:nth-child(n+5)');
+    let wingPhase = 0;
+
+    function animateWings() {
+        wingPhase += 0.15;
+        wings.forEach((wing, i) => {
+            const offset = i % 2 === 0 ? Math.sin(wingPhase + i * 0.5) * 3 : Math.cos(wingPhase + i * 0.5) * 3;
+            wing.setAttribute('ry', 8 + offset);
+        });
+        requestAnimationFrame(animateWings);
+    }
+    animateWings();
+
+    // 鼠标移动事件
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // 平滑跟随动画
+    function updateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+
+        cursorBee.style.left = (cursorX - 20) + 'px';
+        cursorBee.style.top = (cursorY - 20) + 'px';
+
+        requestAnimationFrame(updateCursor);
+    }
+    updateCursor();
+
+    // 悬停在可点击元素上时缩小
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('button, a, .bee-card, .modal-close')) {
+            cursorBee.classList.add('hover');
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('button, a, .bee-card, .modal-close')) {
+            cursorBee.classList.remove('hover');
+        }
+    });
+
+    // 隐藏默认鼠标
+    document.body.style.cursor = 'none';
+}
+
+// ========================================
+// 点击花朵效果
+// ========================================
+function initFlowerEffect() {
+    // 花朵SVG模板
+    const flowerSVGs = [
+        // 雏菊样式
+        `<svg viewBox="0 0 50 50" width="30" height="30">
+            <circle cx="25" cy="12" r="8" fill="#FFB6C1"/>
+            <circle cx="38" cy="18" r="8" fill="#FFB6C1"/>
+            <circle cx="38" cy="32" r="8" fill="#FFB6C1"/>
+            <circle cx="25" cy="38" r="8" fill="#FFB6C1"/>
+            <circle cx="12" cy="32" r="8" fill="#FFB6C1"/>
+            <circle cx="12" cy="18" r="8" fill="#FFB6C1"/>
+            <circle cx="25" cy="25" r="8" fill="#FFD700"/>
+        </svg>`,
+        // 五瓣花
+        `<svg viewBox="0 0 50 50" width="30" height="30">
+            <ellipse cx="25" cy="12" rx="8" ry="12" fill="#FF69B4"/>
+            <ellipse cx="37" cy="20" rx="8" ry="12" fill="#FF69B4" transform="rotate(72 37 20)"/>
+            <ellipse cx="33" cy="36" rx="8" ry="12" fill="#FF69B4" transform="rotate(144 33 36)"/>
+            <ellipse cx="17" cy="36" rx="8" ry="12" fill="#FF69B4" transform="rotate(216 17 36)"/>
+            <ellipse cx="13" cy="20" rx="8" ry="12" fill="#FF69B4" transform="rotate(288 13 20)"/>
+            <circle cx="25" cy="25" r="6" fill="#FFD700"/>
+        </svg>`,
+        // 紫色小花
+        `<svg viewBox="0 0 50 50" width="30" height="30">
+            <circle cx="25" cy="10" r="7" fill="#9370DB"/>
+            <circle cx="38" cy="18" r="7" fill="#9370DB"/>
+            <circle cx="35" cy="32" r="7" fill="#9370DB"/>
+            <circle cx="15" cy="32" r="7" fill="#9370DB"/>
+            <circle cx="12" cy="18" r="7" fill="#9370DB"/>
+            <circle cx="25" cy="25" r="5" fill="#FFD700"/>
+        </svg>`,
+        // 向日葵样式
+        `<svg viewBox="0 0 50 50" width="30" height="30">
+            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700"/>
+            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700" transform="rotate(45 25 25)"/>
+            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700" transform="rotate(90 25 25)"/>
+            <ellipse cx="25" cy="8" rx="5" ry="10" fill="#FFD700" transform="rotate(135 25 25)"/>
+            <ellipse cx="25" cy="42" rx="5" ry="10" fill="#FFD700" transform="rotate(45 25 25)"/>
+            <ellipse cx="25" cy="42" rx="5" ry="10" fill="#FFD700" transform="rotate(90 25 25)"/>
+            <ellipse cx="25" cy="42" rx="5" ry="10" fill="#FFD700" transform="rotate(135 25 25)"/>
+            <ellipse cx="8" cy="25" rx="10" ry="5" fill="#FFD700" transform="rotate(45 25 25)"/>
+            <ellipse cx="42" cy="25" rx="10" ry="5" fill="#FFD700" transform="rotate(45 25 25)"/>
+            <circle cx="25" cy="25" r="8" fill="#8B4513"/>
+        </svg>`
+    ];
+
+    let clickCount = 0;
+
+    document.addEventListener('click', (e) => {
+        // 不在弹窗内创建花朵
+        if (e.target.closest('.modal')) return;
+
+        clickCount++;
+        const flowerIndex = clickCount % flowerSVGs.length;
+        const flower = document.createElement('div');
+        flower.className = 'click-flower';
+        flower.innerHTML = flowerSVGs[flowerIndex];
+        flower.style.left = (e.clientX - 15) + 'px';
+        flower.style.top = (e.clientY - 15) + 'px';
+
+        // 随机旋转
+        const rotation = Math.random() * 360;
+        const scale = 0.5 + Math.random() * 0.5;
+        flower.style.setProperty('--rotation', rotation + 'deg');
+        flower.style.setProperty('--scale', scale);
+
+        document.body.appendChild(flower);
+
+        // 移除动画后的元素
+        setTimeout(() => {
+            flower.remove();
+        }, 1500);
+    });
+}
 
 // 渲染蜜蜂卡片
 function renderBeeCards() {
@@ -249,7 +420,19 @@ function openModal(beeId) {
         </div>
         
         <div class="detail-image">
-            <img src="${beeImages[bee.id - 1]}" alt="${bee.chineseName}" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\\'0 0 200 150\\' width=\\'100%\\' height=\\'100%\\'><ellipse cx=\\'100\\' cy=\\'80\\' rx=\\'50\\' ry=\\'55\\' fill=\\'#F4A020\\' opacity=\\'0.3\\'/><rect x=\\'50\\' y=\\'55\\' width=\\'100\\' height=\\'12\\' fill=\\'#8B5A2B\\' opacity=\\'0.2\\'/><rect x=\\'50\\' y=\\'80\\' width=\\'100\\' height=\\'12\\' fill=\\'#8B5A2B\\' opacity=\\'0.2\\'/><circle cx=\\'100\\' cy=\\'35\\' r=\\'28\\' fill=\\'#8B5A2B\\' opacity=\\'0.2\\'/></svg>'">
+            <div class="image-placeholder">
+                <svg viewBox="0 0 200 150" width="100%" height="100%">
+                    <ellipse cx="100" cy="80" rx="50" ry="55" fill="#F4A020" opacity="0.5"/>
+                    <rect x="50" y="55" width="100" height="12" fill="#8B5A2B" opacity="0.4"/>
+                    <rect x="50" y="80" width="100" height="12" fill="#8B5A2B" opacity="0.4"/>
+                    <circle cx="100" cy="35" r="28" fill="#8B5A2B" opacity="0.4"/>
+                    <ellipse cx="40" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.5" transform="rotate(-40 40 60)"/>
+                    <ellipse cx="160" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.5" transform="rotate(40 160 60)"/>
+                    <ellipse cx="40" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.4" transform="rotate(-50 40 85)"/>
+                    <ellipse cx="160" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.4" transform="rotate(50 160 85)"/>
+                </svg>
+            </div>
+            <img src="${beeImages[bee.id - 1]}" alt="${bee.chineseName}" onerror="this.parentElement.classList.add('image-error')">
         </div>
         
         <div class="detail-section">

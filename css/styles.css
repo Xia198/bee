@@ -713,3 +713,102 @@ body {
     background: var(--color-honey-light);
     color: var(--color-brown-dark);
 }
+
+/* ========================================
+   卡通蜜蜂鼠标效果
+   ======================================== */
+#custom-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+#custom-cursor svg {
+    animation: cursorWings 0.2s ease-in-out infinite alternate;
+}
+
+@keyframes cursorWings {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(0.9); }
+}
+
+#custom-cursor.hover {
+    transform: translate(-50%, -50%) scale(0.7);
+}
+
+#custom-cursor.hover svg {
+    animation: none;
+}
+
+/* ========================================
+   点击花朵效果
+   ======================================== */
+.click-flower {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    animation: flowerAppear 1.5s ease-out forwards;
+}
+
+@keyframes flowerAppear {
+    0% {
+        opacity: 1;
+        transform: scale(0) rotate(0deg) translateY(0);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(var(--scale, 1)) rotate(var(--rotation, 0deg)) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) rotate(var(--rotation, 0deg)) translateY(-100px);
+    }
+}
+
+/* 花朵飘落效果 */
+.click-flower:nth-child(odd) {
+    animation: flowerFall 1.5s ease-out forwards;
+}
+
+@keyframes flowerFall {
+    0% {
+        opacity: 1;
+        transform: scale(var(--scale, 1)) rotate(0deg) translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(var(--scale, 1)) rotate(calc(var(--rotation, 0deg) + 180deg)) translateY(-50px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3) rotate(calc(var(--rotation, 0deg) + 360deg)) translateY(80px);
+    }
+}
+
+/* ========================================
+   移动端隐藏自定义鼠标
+   ======================================== */
+@media (max-width: 768px) {
+    #custom-cursor {
+        display: none;
+    }
+    
+    body {
+        cursor: auto;
+    }
+}
+
+/* ========================================
+   图片错误状态
+   ======================================== */
+.detail-image.image-error img {
+    display: none;
+}
+
+.detail-image.image-error .image-placeholder {
+    display: flex;
+}
+

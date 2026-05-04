@@ -319,6 +319,19 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-normal);
+    display: none;
+}
+
+.card-image img[src] {
+    display: block;
+}
+
+.card-image.image-error img {
+    display: none;
+}
+
+.card-image.image-error .image-placeholder {
+    display: flex;
 }
 
 .bee-card:hover .card-image img {
@@ -333,6 +346,9 @@ body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-honey-light) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .image-placeholder svg {

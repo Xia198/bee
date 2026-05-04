@@ -3,6 +3,19 @@
  * Nine Bees Gallery - Main JavaScript
  */
 
+// 蜜蜂图片URL（使用 Unsplash 免费图片）
+const beeImages = [
+    'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&h=400&fit=crop', // 西方蜜蜂
+    'https://images.unsplash.com/photo-1476067894307-60e5584b5e90?w=600&h=400&fit=crop', // 东方蜜蜂
+    'https://images.unsplash.com/photo-1589912433023-5e1f4b8f4a3e?w=600&h=400&fit=crop', // 大蜜蜂
+    'https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=600&h=400&fit=crop', // 小蜜蜂
+    'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&h=400&fit=crop', // 黑小蜜蜂
+    'https://images.unsplash.com/photo-1563713421683-7aa0e0d5a9b8?w=600&h=400&fit=crop', // 吕宋蜂
+    'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&h=400&fit=crop', // 巴塔哥尼亚蜜蜂
+    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&h=400&fit=crop', // 印度大蜜蜂
+    'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop'  // 沙巴蜂
+];
+
 // 九种蜜蜂属数据
 const beesData = [
     {
@@ -184,20 +197,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 渲染蜜蜂卡片
 function renderBeeCards() {
-    beeGrid.innerHTML = beesData.map(bee => `
+    beeGrid.innerHTML = beesData.map((bee, index) => `
         <div class="bee-card" data-bee-id="${bee.id}">
             <div class="card-number">${bee.id}</div>
             <div class="card-image">
                 <div class="image-placeholder">
                     <svg viewBox="0 0 100 100" width="100" height="100">
-                        <ellipse cx="50" cy="55" rx="30" ry="35" fill="#F4A020" opacity="0.3"/>
-                        <rect x="20" y="40" width="60" height="8" fill="#8B5A2B" opacity="0.2"/>
-                        <rect x="20" y="60" width="60" height="8" fill="#8B5A2B" opacity="0.2"/>
-                        <circle cx="50" cy="25" r="20" fill="#8B5A2B" opacity="0.2"/>
-                        <ellipse cx="20" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.3" transform="rotate(-40 20 40)"/>
-                        <ellipse cx="80" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.3" transform="rotate(40 80 40)"/>
+                        <ellipse cx="50" cy="55" rx="30" ry="35" fill="#F4A020" opacity="0.5"/>
+                        <rect x="20" y="40" width="60" height="8" fill="#8B5A2B" opacity="0.4"/>
+                        <rect x="20" y="60" width="60" height="8" fill="#8B5A2B" opacity="0.4"/>
+                        <circle cx="50" cy="25" r="20" fill="#8B5A2B" opacity="0.4"/>
+                        <ellipse cx="20" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.5" transform="rotate(-40 20 40)"/>
+                        <ellipse cx="80" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.5" transform="rotate(40 80 40)"/>
                     </svg>
                 </div>
+                <img src="${beeImages[index]}" alt="${bee.chineseName}" loading="lazy" onerror="this.parentElement.classList.add('image-error')">
             </div>
             <div class="card-content">
                 <h3 class="card-chinese-name">${bee.chineseName}</h3>
@@ -235,16 +249,7 @@ function openModal(beeId) {
         </div>
         
         <div class="detail-image">
-            <svg viewBox="0 0 200 150" width="100%" height="100%">
-                <ellipse cx="100" cy="80" rx="50" ry="55" fill="#F4A020" opacity="0.3"/>
-                <rect x="50" y="55" width="100" height="12" fill="#8B5A2B" opacity="0.2"/>
-                <rect x="50" y="80" width="100" height="12" fill="#8B5A2B" opacity="0.2"/>
-                <circle cx="100" cy="35" r="28" fill="#8B5A2B" opacity="0.2"/>
-                <ellipse cx="40" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.3" transform="rotate(-40 40 60)"/>
-                <ellipse cx="160" cy="60" rx="30" ry="18" fill="#E8E8E8" opacity="0.3" transform="rotate(40 160 60)"/>
-                <ellipse cx="40" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.25" transform="rotate(-50 40 85)"/>
-                <ellipse cx="160" cy="85" rx="30" ry="18" fill="#E8E8E8" opacity="0.25" transform="rotate(50 160 85)"/>
-            </svg>
+            <img src="${beeImages[bee.id - 1]}" alt="${bee.chineseName}" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\\'0 0 200 150\\' width=\\'100%\\' height=\\'100%\\'><ellipse cx=\\'100\\' cy=\\'80\\' rx=\\'50\\' ry=\\'55\\' fill=\\'#F4A020\\' opacity=\\'0.3\\'/><rect x=\\'50\\' y=\\'55\\' width=\\'100\\' height=\\'12\\' fill=\\'#8B5A2B\\' opacity=\\'0.2\\'/><rect x=\\'50\\' y=\\'80\\' width=\\'100\\' height=\\'12\\' fill=\\'#8B5A2B\\' opacity=\\'0.2\\'/><circle cx=\\'100\\' cy=\\'35\\' r=\\'28\\' fill=\\'#8B5A2B\\' opacity=\\'0.2\\'/></svg>'">
         </div>
         
         <div class="detail-section">

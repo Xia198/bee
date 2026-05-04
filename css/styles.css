@@ -319,40 +319,10 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-normal);
-    display: none;
-}
-
-.card-image img[src] {
-    display: block;
-}
-
-.card-image.image-error img {
-    display: none;
-}
-
-.card-image.image-error .image-placeholder {
-    display: flex;
 }
 
 .bee-card:hover .card-image img {
     transform: scale(1.1);
-}
-
-/* 图片占位符 */
-.image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-honey-light) 100%);
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.image-placeholder svg {
-    opacity: 0.5;
 }
 
 /* 卡片编号 */
@@ -769,16 +739,5 @@ body {
     #bee-follower {
         display: none;
     }
-}
-
-/* ========================================
-   图片错误状态
-   ======================================== */
-.detail-image.image-error img {
-    display: none;
-}
-
-.detail-image.image-error .image-placeholder {
-    display: flex;
 }
 

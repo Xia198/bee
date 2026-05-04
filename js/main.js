@@ -320,17 +320,7 @@ function renderBeeCards() {
         <div class="bee-card" data-bee-id="${bee.id}">
             <div class="card-number">${bee.id}</div>
             <div class="card-image">
-                <div class="image-placeholder">
-                    <svg viewBox="0 0 100 100" width="100" height="100">
-                        <ellipse cx="50" cy="55" rx="30" ry="35" fill="#F4A020" opacity="0.5"/>
-                        <rect x="20" y="40" width="60" height="8" fill="#8B5A2B" opacity="0.4"/>
-                        <rect x="20" y="60" width="60" height="8" fill="#8B5A2B" opacity="0.4"/>
-                        <circle cx="50" cy="25" r="20" fill="#8B5A2B" opacity="0.4"/>
-                        <ellipse cx="20" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.5" transform="rotate(-40 20 40)"/>
-                        <ellipse cx="80" cy="40" rx="20" ry="12" fill="#E8E8E8" opacity="0.5" transform="rotate(40 80 40)"/>
-                    </svg>
-                </div>
-                <img src="${beeImages[index]}" alt="${bee.chineseName}" loading="lazy" onerror="this.parentElement.classList.add('image-error')">
+                <img src="${beeImages[index]}" alt="${bee.chineseName}" loading="lazy">
             </div>
             <div class="card-content">
                 <h3 class="card-chinese-name">${bee.chineseName}</h3>

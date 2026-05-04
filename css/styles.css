@@ -501,7 +501,7 @@ body {
 
 .detail-header {
     text-align: center;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     padding-bottom: var(--space-md);
     border-bottom: 2px dashed var(--color-honey-light);
 }
@@ -533,36 +533,28 @@ body {
     color: var(--color-text-light);
 }
 
-/* 左右布局 */
-.detail-content-wrapper {
+.detail-tags {
     display: flex;
-    gap: var(--space-xl);
-}
-
-.detail-image-section {
-    flex: 0 0 280px;
-}
-
-.detail-info-section {
-    flex: 1;
-    overflow-y: auto;
-}
-
-.detail-image {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-cream-dark) 100%);
-    display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
 }
 
-.detail-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.detail-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    background: var(--color-cream);
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    color: var(--color-brown);
+}
+
+.status-tag {
+    background: var(--color-honey-light);
+    color: var(--color-brown-dark);
 }
 
 .detail-section {
@@ -571,7 +563,7 @@ body {
 
 .detail-section-title {
     font-family: var(--font-handwritten);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--color-brown-dark);
     margin-bottom: var(--space-xs);
     display: flex;
@@ -581,36 +573,13 @@ body {
 
 .detail-section-content {
     font-size: 0.95rem;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--color-text);
 }
 
 .detail-section-content li {
     margin-bottom: 0.3rem;
     margin-left: 1.2rem;
-}
-
-.detail-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-    margin-top: var(--space-md);
-}
-
-.detail-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.3rem 0.8rem;
-    background: var(--color-cream);
-    border-radius: var(--radius-lg);
-    font-size: 0.85rem;
-    color: var(--color-brown);
-}
-
-.status-tag {
-    background: var(--color-honey-light);
-    color: var(--color-brown-dark);
 }
 
 .fun-fact-section {
@@ -623,22 +592,6 @@ body {
 .fun-fact-section .detail-section-content {
     color: var(--color-honey-dark);
     font-style: italic;
-}
-
-/* 移动端响应式 */
-@media (max-width: 768px) {
-    .detail-content-wrapper {
-        flex-direction: column;
-    }
-    
-    .detail-image-section {
-        flex: none;
-        width: 100%;
-    }
-    
-    .detail-image {
-        height: 180px;
-    }
 }
 
 /* ========================================
@@ -720,19 +673,6 @@ body {
 
     .detail-chinese-name {
         font-size: 1.8rem;
-    }
-
-    .detail-image-section {
-        flex: none;
-        width: 100%;
-    }
-
-    .detail-image {
-        height: 180px;
-    }
-
-    .detail-info-section {
-        max-height: 50vh;
     }
 
     .floating-bee {

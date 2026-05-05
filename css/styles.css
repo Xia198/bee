@@ -174,31 +174,143 @@ body {
     75% { transform: translate(-10px, -20px) scale(1.05); opacity: 0.6; }
 }
 
-/* 浮动的小蜜蜂 - 唯美风格 */
+/* 浮动的小蜜蜂 - 全屏随机运动风格 */
 .floating-bee {
-    position: absolute;
-    opacity: 0.4;
-    animation: floatBeeElegant 18s ease-in-out infinite;
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.35;
+    z-index: 2;
     filter: drop-shadow(0 2px 4px var(--color-shadow));
 }
 
-.bee-1 {
-    top: 20%;
-    right: 12%;
-    animation-delay: 0s;
+/* 三只蜜蜂的初始位置 */
+#bgBee1 {
+    top: 15%;
+    right: 10%;
 }
 
-.bee-2 {
-    bottom: 30%;
-    left: 10%;
-    animation-delay: -7s;
+#bgBee2 {
+    bottom: 25%;
+    left: 8%;
 }
 
-@keyframes floatBeeElegant {
-    0%, 100% { transform: translate(0, 0) rotate(-2deg); }
-    25% { transform: translate(30px, -40px) rotate(2deg); }
-    50% { transform: translate(15px, -60px) rotate(-1deg); }
-    75% { transform: translate(-20px, -40px) rotate(1deg); }
+#bgBee3 {
+    top: 55%;
+    right: 25%;
+}
+
+/* 蜜蜂飞行动画 - 每只蜜蜂有不同的轨迹 */
+@keyframes beeFlight1 {
+    0% {
+        transform: translate(0, 0) rotate(-5deg);
+        opacity: 0.3;
+    }
+    12% {
+        transform: translate(-80px, -120px) rotate(8deg);
+        opacity: 0.4;
+    }
+    25% {
+        transform: translate(-150px, -80px) rotate(-3deg);
+        opacity: 0.35;
+    }
+    37% {
+        transform: translate(-200px, -180px) rotate(5deg);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-180px, -300px) rotate(-8deg);
+        opacity: 0.4;
+    }
+    62% {
+        transform: translate(-80px, -350px) rotate(3deg);
+        opacity: 0.35;
+    }
+    75% {
+        transform: translate(20px, -280px) rotate(-5deg);
+        opacity: 0.3;
+    }
+    87% {
+        transform: translate(50px, -180px) rotate(8deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(0, 0) rotate(-5deg);
+        opacity: 0.3;
+    }
+}
+
+@keyframes beeFlight2 {
+    0% {
+        transform: translate(0, 0) rotate(10deg);
+        opacity: 0.35;
+    }
+    15% {
+        transform: translate(120px, -100px) rotate(-12deg);
+        opacity: 0.4;
+    }
+    30% {
+        transform: translate(250px, -50px) rotate(8deg);
+        opacity: 0.3;
+    }
+    45% {
+        transform: translate(350px, -150px) rotate(-6deg);
+        opacity: 0.4;
+    }
+    60% {
+        transform: translate(300px, -280px) rotate(10deg);
+        opacity: 0.35;
+    }
+    75% {
+        transform: translate(180px, -320px) rotate(-8deg);
+        opacity: 0.3;
+    }
+    90% {
+        transform: translate(50px, -200px) rotate(6deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(0, 0) rotate(10deg);
+        opacity: 0.35;
+    }
+}
+
+@keyframes beeFlight3 {
+    0% {
+        transform: translate(0, 0) rotate(-8deg);
+        opacity: 0.3;
+    }
+    20% {
+        transform: translate(-60px, 80px) rotate(5deg);
+        opacity: 0.4;
+    }
+    40% {
+        transform: translate(-120px, 150px) rotate(-10deg);
+        opacity: 0.35;
+    }
+    60% {
+        transform: translate(-50px, 250px) rotate(8deg);
+        opacity: 0.3;
+    }
+    80% {
+        transform: translate(30px, 180px) rotate(-5deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(0, 0) rotate(-8deg);
+        opacity: 0.3;
+    }
+}
+
+#bgBee1 {
+    animation: beeFlight1 25s ease-in-out infinite;
+}
+
+#bgBee2 {
+    animation: beeFlight2 30s ease-in-out infinite;
+}
+
+#bgBee3 {
+    animation: beeFlight3 22s ease-in-out infinite;
 }
 
 /* ========================================
@@ -317,6 +429,30 @@ body {
 
 .hint.hidden {
     display: none;
+}
+
+/* 初始状态：隐藏卡片区域和向下滑动提示 */
+.gallery.hidden-cards {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(50px);
+}
+
+.gallery.reveal-cards {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-indicator.hidden {
+    display: none;
+}
+
+.scroll-indicator.revealed {
+    display: flex;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 0.5s;
 }
 
 /* ========================================
@@ -843,8 +979,24 @@ body {
         font-size: 1.6rem;
     }
 
+    /* 移动端也显示小蜜蜂，但缩小尺寸 */
     .floating-bee {
-        display: none;
+        opacity: 0.25;
+    }
+
+    #bgBee1 {
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    #bgBee2 {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    #bgBee3 {
+        width: 25px !important;
+        height: 25px !important;
     }
 }
 

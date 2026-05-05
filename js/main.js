@@ -205,14 +205,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // 入场动画
 // ========================================
 function initEntryAnimation() {
-    // 检查是否已经触发过
-    if (sessionStorage.getItem('beeEntryComplete')) {
-        completeEntry();
-        return;
+    // 初始状态：卡片区域和向下滑动提示隐藏
+    beeGrid.classList.add('hidden-cards');
+
+    // 滚动指示器默认隐藏
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.classList.add('hidden');
     }
 
-    // 初始状态：卡片隐藏
-    beeGrid.classList.add('hidden-cards');
+    // "点击卡片了解更多" 提示初始隐藏
+    const hint = document.querySelector('.hint');
+    if (hint) {
+        hint.classList.add('hidden');
+    }
 
     // 点击蜜蜂触发动画
     if (entryBee) {
@@ -225,10 +231,9 @@ function triggerEntryAnimation() {
         entryBee.classList.add('fly-away');
     }
 
-    // 1秒后显示卡片
+    // 1秒后显示卡片和提示
     setTimeout(() => {
         completeEntry();
-        sessionStorage.setItem('beeEntryComplete', 'true');
     }, 1000);
 }
 
@@ -242,16 +247,17 @@ function completeEntry() {
     beeGrid.classList.remove('hidden-cards');
     beeGrid.classList.add('reveal-cards');
 
-    // 隐藏/显示提示
+    // 显示"点击卡片了解更多"提示
     const hint = document.querySelector('.hint');
     if (hint) {
         hint.classList.remove('hidden');
     }
 
-    // 滚动指示器
+    // 显示滚动指示器
     const scrollIndicator = document.querySelector('.scroll-indicator');
     if (scrollIndicator) {
-        scrollIndicator.style.display = 'flex';
+        scrollIndicator.classList.remove('hidden');
+        scrollIndicator.classList.add('revealed');
     }
 }
 

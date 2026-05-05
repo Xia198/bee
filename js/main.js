@@ -192,12 +192,151 @@ const modalBody = document.getElementById('modalBody');
 const entryBee = document.getElementById('entryBee');
 const entryBeeContainer = document.getElementById('entryBeeContainer');
 
+// ========================================
+// 背景蜜蜂飞行控制
+// ========================================
+function initFlyingBees() {
+    const bees = [
+        { id: 'bgBee1', size: 55, speed: 1.5 },
+        { id: 'bgBee2', size: 45, speed: 1.8 },
+        { id: 'bgBee3', size: 40, speed: 1.2 }
+    ];
+
+    const flyingBees = bees.map((bee, index) => {
+        const element = document.getElementById(bee.id);
+        if (!element) return null;
+
+        return {
+            element,
+            x: Math.random() * (window.innerWidth - bee.size),
+            y: Math.random() * (window.innerHeight - bee.size),
+            vx: (Math.random() - 0.5) * bee.speed,
+            vy: (Math.random() - 0.5) * bee.speed,
+            size: bee.size,
+            direction: Math.random() * Math.PI * 2 // 初始飞行方向
+        };
+    }).filter(b => b !== null);
+
+    // 确保蜜蜂初始位置不重叠
+    for (let i = 0; i < flyingBees.length; i++) {
+        for (let j = i + 1; j < flyingBees.length; j++) {
+            const b1 = flyingBees[i];
+            const b2 = flyingBees[j];
+            const dx = b1.x - b2.x;
+            const dy = b1.y - b2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const minDist = (b1.size + b2.size) / 2 + 80;
+
+            if (dist < minDist) {
+                // 将第二只蜜蜂移到更远的位置
+                const angle = Math.random() * Math.PI * 2;
+                b2.x = b1.x + Math.cos(angle) * minDist;
+                b2.y = b1.y + Math.sin(angle) * minDist;
+                // 确保不超出边界
+                b2.x = Math.max(0, Math.min(window.innerWidth - b2.size, b2.x));
+                b2.y = Math.max(0, Math.min(window.innerHeight - b2.size, b2.y));
+            }
+        }
+    }
+
+    const boundaryPadding = 100; // 边界内边距
+
+    function update() {
+        flyingBees.forEach(bee => {
+            // 更新位置
+            bee.x += bee.vx;
+            bee.y += bee.vy;
+
+            // 检查边界碰撞
+            let hitBoundary = false;
+
+            if (bee.x <= boundaryPadding) {
+                bee.x = boundaryPadding;
+                bee.vx = Math.abs(bee.vx);
+                hitBoundary = true;
+            } else if (bee.x >= window.innerWidth - bee.size - boundaryPadding) {
+                bee.x = window.innerWidth - bee.size - boundaryPadding;
+                bee.vx = -Math.abs(bee.vx);
+                hitBoundary = true;
+            }
+
+            if (bee.y <= boundaryPadding) {
+                bee.y = boundaryPadding;
+                bee.vy = Math.abs(bee.vy);
+                hitBoundary = true;
+            } else if (bee.y >= window.innerHeight - bee.size - boundaryPadding) {
+                bee.y = window.innerHeight - bee.size - boundaryPadding;
+                bee.vy = -Math.abs(bee.vy);
+                hitBoundary = true;
+            }
+
+            // 碰撞边界时随机改变方向（稍微偏离反射方向）
+            if (hitBoundary) {
+                const randomAngle = (Math.random() - 0.5) * Math.PI / 3; // 随机偏转±30度
+                const speed = Math.sqrt(bee.vx * bee.vx + bee.vy * bee.vy);
+                const currentAngle = Math.atan2(bee.vy, bee.vx);
+                const newAngle = currentAngle + randomAngle;
+                bee.vx = Math.cos(newAngle) * speed;
+                bee.vy = Math.sin(newAngle) * speed;
+            }
+
+            // 避免蜜蜂重叠（如果靠得太近，互相排斥）
+            flyingBees.forEach(other => {
+                if (other === bee) return;
+                const dx = bee.x - other.x;
+                const dy = bee.y - other.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const minDist = (bee.size + other.size) / 2 + 60;
+
+                if (dist < minDist && dist > 0) {
+                    const pushForce = (minDist - dist) * 0.02;
+                    const nx = dx / dist;
+                    const ny = dy / dist;
+                    bee.vx += nx * pushForce;
+                    bee.vy += ny * pushForce;
+                    other.vx -= nx * pushForce;
+                    other.vy -= ny * pushForce;
+                }
+            });
+
+            // 限制速度
+            const maxSpeed = 2.5;
+            const speed = Math.sqrt(bee.vx * bee.vx + bee.vy * bee.vy);
+            if (speed > maxSpeed) {
+                bee.vx = (bee.vx / speed) * maxSpeed;
+                bee.vy = (bee.vy / speed) * maxSpeed;
+            }
+
+            // 计算旋转角度（基于飞行方向）
+            const angle = Math.atan2(bee.vy, bee.vx) * (180 / Math.PI);
+
+            // 更新元素位置和旋转
+            bee.element.style.left = bee.x + 'px';
+            bee.element.style.top = bee.y + 'px';
+            bee.element.style.transform = `rotate(${angle}deg)`;
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    update();
+
+    // 窗口大小改变时重新调整
+    window.addEventListener('resize', () => {
+        flyingBees.forEach(bee => {
+            bee.x = Math.min(bee.x, window.innerWidth - bee.size - boundaryPadding);
+            bee.y = Math.min(bee.y, window.innerHeight - bee.size - boundaryPadding);
+        });
+    });
+}
+
 // 初始化页面
 document.addEventListener('DOMContentLoaded', () => {
     renderBeeCards();
     setupModalEvents();
     initBeeCursor();
     initFlowerEffect();
+    initFlyingBees(); // 初始化飞行蜜蜂
     initEntryAnimation();
 });
 
@@ -206,7 +345,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 function initEntryAnimation() {
     // 初始状态：卡片区域和向下滑动提示隐藏
-    beeGrid.classList.add('hidden-cards');
+    const gallery = document.querySelector('.gallery');
+    const beeGrid = document.getElementById('beeGrid');
+    
+    if (gallery) {
+        gallery.classList.add('hidden-cards');
+    }
+    if (beeGrid) {
+        beeGrid.classList.add('hidden-cards');
+    }
 
     // 滚动指示器默认隐藏
     const scrollIndicator = document.querySelector('.scroll-indicator');
@@ -238,14 +385,23 @@ function triggerEntryAnimation() {
 }
 
 function completeEntry() {
+    const gallery = document.querySelector('.gallery');
+    const beeGrid = document.getElementById('beeGrid');
+
     // 隐藏蜜蜂容器
     if (entryBeeContainer) {
         entryBeeContainer.classList.add('hidden');
     }
 
-    // 显示卡片
-    beeGrid.classList.remove('hidden-cards');
-    beeGrid.classList.add('reveal-cards');
+    // 显示卡片区域
+    if (gallery) {
+        gallery.classList.remove('hidden-cards');
+        gallery.classList.add('reveal-cards');
+    }
+    if (beeGrid) {
+        beeGrid.classList.remove('hidden-cards');
+        beeGrid.classList.add('reveal-cards');
+    }
 
     // 显示"点击卡片了解更多"提示
     const hint = document.querySelector('.hint');
